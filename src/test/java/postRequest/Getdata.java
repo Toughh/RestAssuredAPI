@@ -31,7 +31,7 @@ public class Getdata {
 	public void GeneratePNR() throws IOException {
 		RequestSpecification request = RestAssured.given()
 				.body(reqbody.bodyToSend())
-				.headers("Authorization", "czcxNzMxNg==", "Content-Type", "application/json");
+				.headers("Authorization", "czcxNz", "Content-Type", "application/json");
 			 
 		Response response = request.post("/tdm/booking/creationNew");
 		JSONObject JSONResponseBody = new JSONObject(response.body().asString());
