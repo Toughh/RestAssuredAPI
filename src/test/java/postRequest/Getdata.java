@@ -10,6 +10,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import io.restassured.RestAssured;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import junit.framework.Assert;
@@ -31,11 +32,13 @@ public class Getdata {
 	public void GeneratePNR() throws IOException {
 		RequestSpecification request = RestAssured.given()
 				.body(reqbody.bodyToSend())
-				.headers("Authorization", "czcxNz", "Content-Type", "application/json");
+				.headers("Authorization", "czcx", "Content-Type", "application/json");
 			 
 		Response response = request.post("/tdm/booking/creationNew");
 		JSONObject JSONResponseBody = new JSONObject(response.body().asString());
 		System.out.println(JSONResponseBody);
-		Assert.assertEquals(200, response.getStatusCode());		
+		JsonPath jsonPathValidator = response.jsonPath();
+		System.out.println("PNR: " +jsonPathValidator.get("Details.pnrNumber"));
+		Assert.assertEquals(200, response.getStatusCode());	
 	}
 }
